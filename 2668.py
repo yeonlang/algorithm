@@ -1,29 +1,28 @@
 import sys
 sys.stdin = open("2668.txt","r")
 
+def dfs(start):
+    stack=[start]
+    while stack:
+        now=stack.pop()
+        if result[now]==2:
+            return
+        result[now] += 1
+        stack.append(lst[1][now]-1)
+
 n=int(input())
 lst=[[i for i in range(1,n+1)],[]]
-result=[]
-check=[1 for _ in range(n)]
+result=[0 for _ in range(n)]
 for _ in range(n):
     lst[1].append(int(input()))
 
+for start in range(n):
+    dfs(start)
+    result=[ 2 if i==2 else 0 for i in result]
+
+print(result.count(2))
 for i in range(n):
-    if lst[0][i] == lst[1][i]:
-        result.append(lst[0][i])
-        check[lst[0][i]-1] = 0
-
-for j in range(n):
-    if lst[0][j] == lst[1][lst[1][j]-1] and check[j]:
-        check[lst[1][j]-1]=0
-        result.append(lst[0][j])
-        result.append(lst[1][j])
-
-result.sort()
-print(len(result))
-for _ in result:
-    print(_)
-
-
+    if result[i] == 2:
+        print(i+1)
 
 
