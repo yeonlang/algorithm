@@ -31,5 +31,5 @@ for i in range(1<<n):
         if i & (1<<j):
             result.append(lst[j])
     if sumiszero(result):
-        print(result)
+        print(result,3)
     result=[]

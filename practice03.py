@@ -15,17 +15,7 @@ def Low(lst):
 #갈수 있는 지역인지 없는 지역인지 판단하는 함수
 def Pass(y,x,n):
     L,B,R,T =nxt//4, (nxt+1)//4, (nxt+2)//4, (nxt+3)//4
-    if L<=x<n-R and T<=y<n-B:
-        return True
-    else:
-        return False
-
-#현재의 좌표, nxt=꺽어진횟수, count=새로운입력을 추가한 횟수
-x, y, nxt, count = 0, 0, 0, 0
-
-#우 하 좌 상
-dx=[1,0,-1,0]
-dy=[0,1,0,-1]
+    return L<=x<n-R and T<=y<n-B
 
 #인풋을 받아와 이차원리스트를 생성해준다.
 lst=[]
@@ -38,15 +28,19 @@ for _ in range(n-1):
     lst.append(list(map(int,input().split())))
 arr=[ [0]*n for _ in range(n)]
 
+#현재의 좌표, nxt=꺽어진횟수, count=새로운입력을 추가한 횟수
+x, y, nxt, count = 0, 0, 0, 0
+#우 하 좌 상
+dx=[1,0,-1,0]
+dy=[0,1,0,-1]
+
 
 while count<V:
     #입력으로 받은 이차원 배열의 최소값과 최소값의 인덱스(j,i)를 가져온다.
-
     #다음 좌표가 갈 수 있는 곳이라면
     if Pass(y,x,n):
         #다음 좌표가 가리키는 공간에 최소값 저장
         arr[y][x]=Low(lst)
-
     else:
         #다음 좌표가 갈 수 없는 곳이라면 다음좌표를 이전좌표로 초기화 count-=1
         x -= dx[nxt % 4]
@@ -54,7 +48,6 @@ while count<V:
         count-=1
         #갈수없는 곳에 도달하였기 때문에 한번 꺽어준다.
         nxt += 1
-
     #좌표를 다음 좌표로 갱신해준다, count+=1
     x+=dx[nxt%4]
     y+=dy[nxt%4]
