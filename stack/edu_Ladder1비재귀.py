@@ -2,12 +2,7 @@ import sys
 sys.stdin = open("1210.txt","r")
 
 def dfs(start):
-    global visited
-    global lst
-    global n
-
     stack=[start]
-
     while stack:
         y, x = stack.pop()
         visited[y][x]=1
@@ -26,6 +21,8 @@ def dfs(start):
 for tc in range(1):
 
     z=input()
+    del z
+
     lst=[]
     lst.append(list(map(int,input().split())))
     n=len(lst[0])

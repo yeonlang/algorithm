@@ -1,17 +1,15 @@
 import sys
 sys.stdin = open("input2.txt","r")
 
-Info = [-1] * 128 #char 1bite ASCII code 7bit
-Info[ord(')')]='('
-Info[ord(']')]='['
-Info[ord('}')]='{'
-Info[ord('>')]='<'
-
-judge=[40, 123, 41, 125]
-stack = [0]*100000
-
 for tc in range(int(input())):
+    Info = [-1] * 128  # char 1bite ASCII code 7bit
+    Info[ord(')')] = '('
+    Info[ord('}')] = '{'
+
+    judge = [40, 123, 41, 125]
+    stack = [0] * 1000
     top = -1
+
     Data=input()
     howmany=len(Data)
     flag=True
@@ -33,4 +31,3 @@ for tc in range(int(input())):
         print(f'#{tc+1} {1}')
     else:
         print(f'#{tc+1} {0}')
-

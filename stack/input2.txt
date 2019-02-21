@@ -1,1 +1,4 @@
-{()(){a(b)bbb}(c)c}
+3
+list(print('{} {}'.format(1, 2)))
+N, M = map(int, input().split())
+{{(})}

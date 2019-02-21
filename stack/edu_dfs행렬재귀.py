@@ -1,8 +1,9 @@
 import sys
 sys.stdin =open("input3.txt","r")
 
-my_map = [[0]*7 for i in range(7)]
-visited = [0]*7
+my_map = [[0]*8 for i in range(8)]
+visited = [0]*8
+
 def DFS(here):
     print(here)
     visited[here] = True
