@@ -9,8 +9,8 @@ def pop():
     print(stack[top+1], end="")
     stack[top+1] = 0
 
-data = '(3-2*(6+5*(2-8)/2)+24)'
-# data = input()
+# data = '(3-2*(6+5*(2-8)/2)+24)'
+data = 'A*(B+C)'
 stack = [0]*10
 top = -1
 # ')':41, '*':42, '/':47, '+':43, '-':45 '(',40
@@ -40,6 +40,8 @@ for i in range(len(data)):
             else :
                 push(data[i])
                 break
+while top>-1:
+    pop()
 
 
 

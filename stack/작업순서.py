@@ -5,8 +5,8 @@ def dfs(start):
     stack=[start]
     while stack:
         now = stack.pop()
-        visited[now] +=1
         print(now, end=" ")
+        visited[now] =1
 
         for nxt in range(1,node+1):
             if data[now][nxt] and isPossible(nxt) :
@@ -14,7 +14,7 @@ def dfs(start):
 
 
 def isPossible(now):
-    for i in range(node+1):
+    for i in range(1,node+1):
         if reverse_data[now][i]==1:
             if visited[i] == 0:
                 return False
@@ -32,11 +32,11 @@ for tc in range(10):
 
     for i in range(n):
         start = edge_data[i * 2]
-        stop = edge_data[i * 2 - 1]
+        stop = edge_data[i * 2 + 1]
         data[start][stop] = 1
         reverse_data[stop][start] =1
 
     for j in range(1,node+1):
-        if isPossible(j) and not visited[j]:
+        if not 1 in reverse_data[j]:
             dfs(j)
     print()
