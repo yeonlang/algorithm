@@ -15,6 +15,12 @@ def btk(y,nowsum):
         return
 
     for x in range(n):
+        if not visited[x]:
+            nowsum += weight[y+2][x+2]
+            visited[x] = 1
+            btk(y+1,nowsum)
+            nowsum -= weight[y+2][x+2]
+            visited[x] = 0
 
 
 
@@ -24,7 +30,7 @@ for tc in range(int(input())):
     data = list(map(int,input().split()))
     weight = [[0]*(n+2) for _ in range(n+2)]
     minsum=987654321
-    visited=[0]*(n+1)
+    visited=[0]*n
     nowsum=0
 
     for start in range(n+2):
@@ -33,6 +39,8 @@ for tc in range(int(input())):
 
     for i in range(n):
         nowsum+=weight[0][i+2]
+        visited[i]=1
         btk(i,nowsum)
+        visited[i]=0
         nowsum-=weight[0][i+2]
 
