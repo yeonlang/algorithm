@@ -7,9 +7,8 @@ def dfs(start,nowsum):
     if start == find:
         if minsum > nowsum:
             minsum=nowsum
-            print(road)
-            print(minsum)
-            # result=road[:]
+            # print(road)
+            # print(minsum)
         return
     if nowsum > minsum:
         return
@@ -40,5 +39,5 @@ for _ in range(1,m+1):
     plus[end][start] = value
 
 dfs(1,0)
-print('end')
-# print(result)
+print(minsum)
+

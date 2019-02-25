@@ -4,8 +4,6 @@ def getsum(start,index,nowsum):
     nowsum+=start
     if sum(road) == goal:
         print(road)
-        print(nowsum)
-        # result=road[:]
         return
     if sum(road) > goal:
         return

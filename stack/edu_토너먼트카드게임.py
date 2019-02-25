@@ -1,34 +1,25 @@
 import sys
 sys.stdin = open("토너먼트.txt","r")
 
-def winner(a,b):
-    if a[0][1] == b[0][1]:
-        return a
-    if a[0][1] == 3 or b[0][1] == 3:
-        if a[0][1] == 1:
-            return a
-        if b[0][1] == 1:
-            return b
+def winner(i,j):
+    c=data[i] - data[j] + 3
+    if c == 3 or c%3 == 1 :
+        return i
+    else :
+        return j
 
-    if a[0][1] > b[0][1]:
-        return a
-    else:
-        return b
-
-def half(data):
-    length = len(data)
-    if length == 1:
-        return data
-    if length == 2:
-        return winner(data[:1],data[1:])
-
-    return winner(half(data[:length//2]),half(data[length//2:]))
-
+def half(start,end):
+    m=(end+start)//2
+    if end-start == 0:
+        return start
+    elif end-start == 1:
+        return winner(start,end)
+    return winner(half(start,m),half(m+1,end))
 
 for tc in range(int(input())):
     n=int(input())
-    data = list( (i+1,j) for i,j in enumerate(map(int,input().split())))
-    print(f"#{tc+1} {half(data)[0][0]}")
+    data = list(map(int,input().split()))
+    print(f"#{tc+1} {half(0,n-1)+1}")
 
 
 
