@@ -29,10 +29,14 @@ def pop():
 for tc in range(10):
     icp = [-1] * 128
     isp = [-1] * 128
-    isp[41] = 3
+    #')'
+    isp[41] = 0
     icp[41] = 0
+    #'('
     isp[40] = 0
-    icp[40] = 4
+    icp[40] = 3
+    #'+' '-'
+    #'*' '/'
     icp[43] = icp[45] = isp[43] = isp[45] = 1
     icp[47] = icp[42] = isp[47] = isp[42] = 2
 
@@ -45,40 +49,44 @@ for tc in range(10):
 
     for i in range(len(data)):
         value=data[i]
-        if ord(data[i]) == 40:
+        if ord(value) == 40:
             push(data[i])
-            continue
-        if ord(data[i]) == 41:
-            flag=''
-            while flag!='(':
-                flag=pop()
-                result.append(flag)
-            result.pop()
             continue
 
-        if isp[ord(data[i])] == -1:
-            result.append(data[i])
+        # ')'
+        if value == ')':
+            while True:
+                judge=pop()
+                if judge == '(':
+                    break
+                else:
+                    result.append(judge)
+                    if not stack:
+                        break
             continue
-        what=stack[top]
-        if top == -1 or icp[ord(data[i])] >= isp[ord(stack[top])]:
-            push(data[i])
+
+        if isp[ord(value)] == -1:
+            result.append(value)
+
         else:
-            while icp[ord(data[i])] < isp[ord(stack[top])]:
-                result.append(pop())
-            result.append(data[i])
+            while icp[ord(value)] < isp[ord(stack[top])]:
+                temp=pop()
+                result.append(temp)
+            push(value)
+
+
     while top>=0:
         result.append(pop())
+    print(*result)
+    while len(result)>1:
+        for i in range(len(result)):
+            if result[i] == '+' or result[i] == '-' or result[i] == '/' or result[i] == '*':
+                temp=my_math(int(result[i-1]), int(result[i-2]), ord(result[i]))
+                del result[i - 2:i]
+                result[i-2] = temp
+                break
 
-    print(result)
-    # while len(result)>1:
-    #     for i in range(len(result)):
-    #         if result[i] == '+' or result[i] == '-' or result[i] == '/' or result[i] == '*':
-    #             temp=my_math(int(result[i-1]), int(result[i-2]), ord(result[i]))
-    #             del result[i - 2:i]
-    #             result[i-2] = temp
-    #             break
-    #
-    # print(f"#{tc+1} {result[0]}")
+    print(f"#{tc+1} {result[0]}")
 
 
 
