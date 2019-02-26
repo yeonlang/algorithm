@@ -1,0 +1,40 @@
+import sys
+sys.stdin = open('input.txt', 'r') # 파일에서 읽을 때 사용
+
+
+howmany = 0
+minsum = 987654321
+
+
+def GetSome(y, sofar):
+    global howmany, minsum
+    if sofar >= minsum :
+        print("가봐야 소용없어")
+        return
+
+    if y == howmany :
+        if sofar < minsum : minsum = sofar
+        return
+
+    for x in range(howmany):
+        if not UsedX[x] :
+            UsedX[x]= True
+            GetSome(y+1, sofar+MyMap[y][x])
+            UsedX[x] = False
+
+
+
+
+
+
+T= int(input())
+for tc in range(1, T+1):
+    minsum = 987654321
+    howmany = int(input())
+    MyMap = [[0] * howmany for i in range(howmany)]
+    UsedX = [0] * howmany
+    for i in range(howmany):
+        MyMap[i] = list(map(int, input().split()))
+
+    GetSome(0 , 0)
+    print('#%d' % tc, minsum)

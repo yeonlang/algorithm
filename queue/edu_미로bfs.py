@@ -1,5 +1,5 @@
 import sys
-sys.stdin =open("4871.txt","r")
+sys.stdin=open("미로bfs.txt","r")
 
 def deque():
     global front
@@ -29,21 +29,25 @@ def bfs(start):
                 enque((ny,nx))
     return 0
 
-def DFS(start):
-    visited[start] = 1
-    for next in range(node+1):
-        if my_map[start][next] and not visited[next]:
-            DFS(next)
-
 for tc in range(int(input())):
-    node, edge = map(int,input().split())
-    my_map = [[0]*(node+1) for _ in range(node+1)]
-    visited = [0]*(node+1)
+    dx = [1, 0, -1, 0]
+    dy = [0, 1, 0, -1]
 
-    for _ in range(edge):
-        now, nxt = map(int,input().split())
-        my_map[now][nxt] = 1
+    que=[0]*10000
+    front=-1
+    rear=-1
 
-    start, willfind = map(int, input().split())
-    DFS(start)
-    print(f"#{tc+1} {visited[willfind]}")
+    n=int(input())
+    data=[]
+
+    result = False
+
+    for y in range(n):
+        lst=list(map(int,input()))
+        if 2 in lst:
+            start=(y,lst.index(2))
+        data.append(lst)
+        del lst
+
+
+    print(f'#{tc+1} {bfs(start)}')
