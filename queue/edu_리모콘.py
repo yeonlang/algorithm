@@ -23,7 +23,7 @@ def bfs(start):
             if 0<=nxt+10<n+20 and not visited[nxt+10]:
                 visited[nxt+10] = visited[now+10]+[delta[i]]
                 if nxt == there:
-                    return visited[nxt+10]
+                    return
                 enque(nxt)
     return 0
 for i in range(13):
@@ -37,6 +37,6 @@ for i in range(13):
     rear=-1
 
     visited[go+10]=[]
-
-    print(f"{go}에서 {there}까지 가장 적은 버튼 조작횟수는 ?")
-    print(bfs(go))
+    bfs(go)
+    print(f"{go}에서 {there}까지 가장 적은 버튼 조작횟수는 ? {len(visited[there+10])}회")
+    print(visited[there+10])

@@ -14,22 +14,6 @@ def enque(item):
     que[rear]=item
 
 def bfs(start):
-    global result,data
-    enque(start)
-
-    while rear != front:
-        y,x = deque()
-        for i in range(4):
-            ny=y+dy[i]
-            nx=x+dx[i]
-            if 0<=ny<n and 0<=nx<n and data[ny][nx] != 1:
-                if data[ny][nx] == 3:
-                    return 1
-                data[ny][nx] = 1
-                enque((ny,nx))
-    return 0
-
-def bfs(start):
     global result, data
     enque(start)
 
