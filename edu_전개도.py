@@ -1,69 +1,65 @@
 import sys
 sys.stdin = open("전개도.txt","r")
 
-def dfs(start):
-    global flag,count
+def Match(y1,x1,y2,x2):
+    # x2와 y2를 큰 값으로 정렬
+    if x1 > x2:
+        x1,x2 = x2,x1
+    if y1 > y2:
+        y1,y2 = y2,y1
 
-    stack = [start]
-    while stack:
-        y,x = stack.pop()
+    # x 의 값이 2 차이가 난다면
+    if x2 == (x1+2):
+        # 사이에 건너갈 수 있는 숫자가 존재하는지 탐색
+        # 만약 들어올때의 y2>y1 이었으면 위에서 아래로 한칸씩 내려가며 탐색
+        # x2<x1 이면 아래에서 위로 한칸씩 올라가며 탐색(큰 값을 y2로 정렬하였기 때문에)
+        for now in range(y1,y2+1):
+            if a[now][x1+1] == 0:
+                break
+            if now >= y2:
+                return 1
 
-        for i in range(4):
-            ny=y+dy[i]
-            nx=x+dx[i]
-            if 0<=nx<6 and 0<=ny<6 and data[ny][nx] and not visited[ny][nx]:
-                count += 1
-                stack.append((ny,nx))
-                visited[ny][nx] = 1
+    # y 의 값이 2 차이가 난다면
+    if y2 == (y1 + 2):
+        # 사이에 건너갈 수 있는 숫자가 존재하는지 탐색
+        # 만약 들어올때의 x2>x1 이었으면 위에서 아래로 한칸씩 내려가며 탐색
+        # x2<x1 이면 아래에서 위로 한칸씩 올라가며 탐색(큰 값을 y2로 정렬하였기 때문에)
+        for now in range(x1, x2 + 1):
+            if a[y1+1][now] == 0:
+                break
+            if now >= x2:
+                return 1
+    return 0
 
-    if count != 6:
-        flag = False
+a = [ list(map(int,input().split())) for _ in range(6) ]
+result = [0] * 7
+y_loca = [0] * 7
+x_loca = [0] * 7
 
-def judge(now):
-    global check,flag
-    check = 0
-    y,x = now
-    x_left = x-2
-    x_right = x+2
-    y_top = y-2
-    y_bottom = y+2
-    for i in range(6):
-        if x_left>=0 and data[i][x_left]:
-            check+=1
-        if x_right<6 and data[i][x_right]:
-            check+=1
-        if y_top>=0 and data[y_top][i]:
-            check+=1
-        if y_bottom<6 and data[y_bottom][i]:
-            check+=1
-    if not check:
-        flag = False
+#1~6까지의 좌표를 x_loca , y_loca에 저장
+for y in range(6):
+    for x in range(6):
+        y_loca[a[y][x]] = y
+        x_loca[a[y][x]] = x
 
+# 비교할 첫 번째 숫자를 고르고
+for now_point in range(1,7):
+    # 첫 번째 숫자의 페어 값이 아직 없다면
+    if result[now_point] == 0:
+        # 비교할 두 번째 숫자를 고른다.
+        for nxt_point in range(now_point+1,7):
+            # 두 번째 숫자의 페어 값도 없을 시
+            if result[nxt_point] == 0:
+                # 첫번째 포인트와 두번째 포인트의 좌표값으로 매치 되는 값인지 찾는다.
+                if Match(y_loca[now_point], x_loca[now_point], y_loca[nxt_point], x_loca[nxt_point]):
+                    # 매치가 된다면 결과 리스트에 페어 값을 넣어준다.
+                    result[now_point] = nxt_point
+                    result[nxt_point] = now_point
+                    break
 
-data = [ list(map(int,input().split())) for _ in range(6)]
-
-point = []
-result = []
-dx=[1,-1,0,0]
-dy=[0,0,-1,1]
-visited=[[0]*6 for _ in range(6)]
-flag = True
-count = 0
-
-for j in range(6):
-    for i in range(6):
-        if data[j][i] and not visited[j][i]:
-            visited[j][i] = 1
-            count+=1
-            dfs((j,i))
-
-for j in range(6):
-    for i in range(6):
-        if visited[j][i] :
-            judge((j,i))
-
-if flag:
-    print("정육면체의 전개도 입니다.")
+# 페어 값이 없는 숫자가 있다면 => 전개도가 아니다.
+if 0 in result[1:]:
+    print(0)
+# 모든 페어가 맞는다면 1번과 짝이 되는 숫자를 print
 else:
-    print("정육면체의 전개도가 아닙니다.")
-
+    print(result[1])
