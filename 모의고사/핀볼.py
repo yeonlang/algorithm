@@ -52,12 +52,8 @@ def solution(start,dir):
         nx = x+dx[dir]
         ny = y+dy[dir]
 
-        # 다음지점이 웜홀일때
-        if 6 <= data[ny][nx] <= 10:
-            ny, nx = wormhole[(ny, nx)]
-
-        # 다음 지점이 끝일때
-        if nx < 0 or nx >= n or ny < 0 or ny > n:
+        # 다음 지점이 벽일때
+        if nx < 0 or nx >= n or ny < 0 or ny >= n:
             if dir == 0:
                 dir = 1
             elif dir == 1:
@@ -70,11 +66,19 @@ def solution(start,dir):
             nx = x
             ans += 1
 
-        #다음지점이 벽일때
+        # 다음지점이 웜홀일때
+        if 6 <= data[ny][nx] <= 10:
+            y, x = wormhole[(ny, nx)]
+            continue
+
+        #다음지점이 블록일때
         if 1<= data[ny][nx] <=5:
             r = data[ny][nx]
             dir = nextdir(dir,r)
             ans += 1
+            y = ny
+            x = nx
+            continue
 
         # 다음지점이 블랙홀이거나 시작점일때
         if (ny, nx) == start or data[ny][nx] == -1:
@@ -114,5 +118,5 @@ for tc in range(int(input())):
                     temp = solution((y,x),i)
                     if temp > result:
                         result = temp
-    print('hi')
-    print(result)
+
+    print("#{} {}".format(tc+1,result))
