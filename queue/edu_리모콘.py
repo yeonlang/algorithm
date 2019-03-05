@@ -38,5 +38,5 @@ for i in range(13):
 
     visited[go+10]=[]
     bfs(go)
-    print(f"{go}에서 {there}까지 가장 적은 버튼 조작횟수는 ? {len(visited[there+10])}회")
+    print("{}에서 {}까지 가장 적은 버튼 조작횟수는 ? {}회".format(go,there,len(visited[there+10])))
     print(visited[there+10])
