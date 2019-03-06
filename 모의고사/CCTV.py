@@ -1,5 +1,6 @@
 import sys
 sys.stdin = open("CCTV.txt","r")
+import copy
 
 def Zcount():
     result=0
@@ -37,10 +38,11 @@ def search(y, x, value, dir, plus):
         fill(y, x, dx5[dir], dy5[dir], plus)
 
 def getMin(now):
-    global my_min
+    global my_min#,scope
     if now == len(cctv):
         now_count = Zcount()
         if now_count < my_min:
+            # scope = copy.deepcopy(data)
             my_min = now_count
         return
 
@@ -53,7 +55,6 @@ def getMin(now):
 
 n,m = map(int,input().split())
 data = [ [0]*m for _ in range(n) ]
-my_min = 1000
 dir_num = [0,4,2,4,4,1]
 cctv = []
     #상, 하, 좌, 우
@@ -64,7 +65,7 @@ dx2 = [[0,0],[-1,1]]
 dy2 = [[-1,1],[0,0]]
     # 상우, 우하, 하좌, 좌상
 dx3 = [[0,1],[1,0],[0,-1],[-1,0]]
-dy3 = [[-1,0],[0,-1],[1,0],[0,-1]]
+dy3 = [[-1,0],[0,1],[1,0],[0,-1]]
     # 좌상우, 상우하, 우하좌, 하좌상
 dx4 = [[-1,0,1],[0,1,0],[1,0,-1],[0,-1,0]]
 dy4 = [[0,-1,0],[-1,0,-1],[0,1,0],[1,0,-1]]
@@ -78,8 +79,16 @@ for y in range(n):
         if 1<=value<=5:
             cctv.append((y,x,value))
 
+my_min = 1000
+temp = Zcount()
+if temp < my_min:
+    my_min = temp
+
 getMin(0)
 
 print(my_min)
+
+# for i in range(n):
+#     print(*scope[i])
 
 
