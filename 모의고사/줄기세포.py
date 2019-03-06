@@ -52,6 +52,8 @@ for tc in range(int(input())):
     stack = []
     time = 0
     while time != K:
+        if time == K-1:
+            print('hi')
         l = func1()
         if stack:
             stack.sort(key=lambda x: x[2])
