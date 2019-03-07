@@ -1,3 +1,4 @@
-stack = [(0,0,1),(0,0,2),(3,3,1),(4,5,0)]
-stack.sort(key=lambda x: x[2])
-print(stack)
+from itertools import product
+
+c=[{1,2,3},{4,5,6},{1,2,3}]
+print(len(*c))
