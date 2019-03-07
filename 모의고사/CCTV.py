@@ -1,7 +1,7 @@
 import sys
 sys.stdin = open("CCTV.txt","r")
-import copy
 
+from collections import deque
 def Zcount():
     result=0
     for y in range(n):
@@ -13,17 +13,20 @@ def Zcount():
 
 def fill(y, x, dx, dy, plus):
    for i in range(len(dx)):
-       stack = [(y, x)]
-       while stack:
-           now_y,now_x = stack.pop()
+       que = deque()
+       pop=que.popleft
+       append=que.append
+       append((y,x))
+       while que:
+           now_y,now_x = pop()
 
            ny = now_y + dy[i]
            nx = now_x + dx[i]
 
-           if 0<=ny<n and 0<=nx<m and (data[ny][nx] >= 10 or not data[ny][nx]):
-               data[ny][nx] += plus
-               stack.append((ny,nx))
-
+           if 0<=ny<n and 0<=nx<m and data[ny][nx] != 6:
+               if data[ny][nx] == 0  or data[ny][nx] >6:
+                   data[ny][nx] += plus
+               append((ny,nx))
 
 def search(y, x, value, dir, plus):
     if value == 1:
@@ -38,11 +41,10 @@ def search(y, x, value, dir, plus):
         fill(y, x, dx5[dir], dy5[dir], plus)
 
 def getMin(now):
-    global my_min#,scope
+    global my_min
     if now == len(cctv):
         now_count = Zcount()
         if now_count < my_min:
-            # scope = copy.deepcopy(data)
             my_min = now_count
         return
 
@@ -79,7 +81,7 @@ for y in range(n):
         if 1<=value<=5:
             cctv.append((y,x,value))
 
-my_min = 1000
+my_min = 10000
 temp = Zcount()
 if temp < my_min:
     my_min = temp
@@ -87,8 +89,5 @@ if temp < my_min:
 getMin(0)
 
 print(my_min)
-
-# for i in range(n):
-#     print(*scope[i])
 
 

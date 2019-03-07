@@ -15,4 +15,4 @@ def find(N,K):
 A=[1,2,3,4,5,6,7,8,9,10,11,12]
 for tc in range(int(input())):
     N, K = map(int, input().split())
-    print(f"#{tc+1} {find(N,K)}")
+    print("#{} {}".format(tc+1,find(N,K)))
