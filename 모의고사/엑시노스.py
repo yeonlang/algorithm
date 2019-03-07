@@ -1,7 +1,20 @@
 import sys
 sys.stdin = open("엑시노스.txt","r")
 
-from itertools import product
+from itertools import product,combinations
+
+def func():
+    global my_max
+    k = len(core)
+    while k:
+        for i in combinations(core,k):
+            for j in product(*i):
+                a = sol(j)
+                if a and a<my_max:
+                            my_max = a
+        if my_max != 987654321:
+            return
+        k-=1
 
 def sol(sets):
     global my_max
@@ -39,10 +52,7 @@ for tc in range(int(input())):
                 for root in sight(y, x):
                     now_core.append(root)
                 core.append(now_core)
-    for i in product(*core):
 
-        a = sol(i)
-        if a and a<my_max:
-            my_max = a
+    func()
 
     print("#{} {}".format(tc+1,my_max))
