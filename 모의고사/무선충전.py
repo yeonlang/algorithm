@@ -18,7 +18,6 @@ def fill(start_y,start_x,D):
                 data[ny][nx] += 1
                 visited[ny][nx] = visited[y][x] + 1
 
-
 def sol():
     global result
     time = 0
