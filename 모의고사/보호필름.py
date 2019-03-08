@@ -3,7 +3,7 @@ sys.stdin = open("보호필름.txt","r")
 
 # currentD = D번째 필름을 살펴볼차례 , 약품 처리 횟수 ,
 # precnt 지금까지 만족한 특성셀의 수, 각 셀에서 최대한 길게 이어지는 값
-def solve(curD, trycnt, precnt, maxprecnt):
+def solve(curD, trycnt, precnt, maxprecnt,chemical):
     global my_min
     # 약품 처리횟수가 현재까지의 최소횟수보다 클시 가지치기
     if trycnt >= my_min:
@@ -20,7 +20,7 @@ def solve(curD, trycnt, precnt, maxprecnt):
         #지금까지 조사한 약품 최소 투입수보다 작을시 갱신
         if isSatisfied and trycnt<my_min:
             my_min = trycnt
-            return
+        return
 
     for i in range(2,-1,-1):
         chemical[curD] = i
@@ -41,9 +41,7 @@ def solve(curD, trycnt, precnt, maxprecnt):
 
         #다음 필름을 탐색하러 재귀 출발
         #처리 안했을 시 A약품 처리 A일시 B, B일시 처리 안함( 0 if i ==2 else 1)
-        solve(curD+1, trycnt + 0 if i ==2 else 1, cntnum, maxcntnum)
-
-
+        solve(curD+1, trycnt + (0 if i == 2 else 1), cntnum[:], maxcntnum[:],chemical[:])
 
 for tc in range(int(input())):
     D,W,K = map(int, input().split())
@@ -57,21 +55,21 @@ for tc in range(int(input())):
     #현재 필름까지 세로 방향으로 연속한 동일 특성 셀의 최대 갯수
     maxcntnum = [1]*W
     #각 셀에 투입된 약품 (A=0,B=1,처리안함=2)
-    chemical = [0]*D
+    chemical = [2]*D
 
     #시작
     #0번셀에 약품 처리를 하지 않을 경우
-    chemical[0] = 2
-    solve(1,0,cntnum,maxcntnum)
+    solve(1,0,cntnum[:],maxcntnum[:],chemical[:])
 
     #0번셀에 약품 처리를 A로 하였을 경우
     chemical[0] = 0
-    solve(1, 1, cntnum, maxcntnum)
+    solve(1, 1, cntnum[:], maxcntnum[:],chemical[:])
 
     #0번셀에 약품 처리를 B로 하였을 경우
     chemical[0] = 1
-    solve(1, 1, cntnum, maxcntnum)
+    solve(1, 1, cntnum[:], maxcntnum[:],chemical[:])
 
+    print(my_min)
 
 
 

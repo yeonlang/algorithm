@@ -10,6 +10,7 @@ for tc in range(int(input())):
         L,S = S,L
     if len(l_data) < len(s_data):
         l_data,s_data = s_data[:],l_data[:]
+
     my_max = 0
     for i in range(L-S+1):
         result = 0
