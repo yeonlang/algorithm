@@ -17,7 +17,7 @@ def clean():
         if data[99][x] == 0:
             top[x] = 99
 
-def judge_row():
+def judge():
     global maxtop
     for y in range(maxtop+1,100):
         cntx = [1,1,1,1,1,1]
@@ -31,14 +31,6 @@ def judge_row():
                     data[y][i] = 0
                     cntx[i]=1
 
-def judge_col():
-    global maxtop
-    for x in range(0, 6):
-        cnty=[1]*100
-        for y in range(99,top[x],-1):
-            if data[y+1][x] == data[y][x] and data[y+1][x]:
-                cnty = cnty[y+1]+1
-
 
 for tc in range(int(input())):
     data = [[0]*6 for _ in range(100)]
@@ -48,6 +40,6 @@ for tc in range(int(input())):
 
     for i in map(int,input().split()):
         push(i)
-        judge_row()
+        judge()
         clean()
 
