@@ -17,8 +17,8 @@ def clean():
         if data[99][x] == 0:
             top[x] = 99
 
-def judge():
-    global maxtop
+def judge(value):
+    global maxtop,score1,score2
     for y in range(maxtop+1,100):
         cntx = [1,1,1,1,1,1]
         for x in range(1,6):
@@ -30,16 +30,24 @@ def judge():
                 for i in range(now,now-cntx[now],-1):
                     data[y][i] = 0
                     cntx[i]=1
-
+                    if value == 1:
+                        score2 +=1
+                    elif value == 2:
+                        score1 +=1
 
 for tc in range(int(input())):
     data = [[0]*6 for _ in range(100)]
     top = [99,99,99,99,99,99]
     maxtop = 99
     value = 1
+    score1 = 0
+    score2 = 0
 
     for i in map(int,input().split()):
         push(i)
-        judge()
+        judge(value)
         clean()
+    print(score1)
+    print(score2)
+
 
