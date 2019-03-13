@@ -8,6 +8,7 @@ def merge(left,right):
     while l != endl and r != endr:
         if left[l] > right[r]:
             result[now] = right[r]
+            count += (len(left) - l)
             now+=1
             r+=1
             

@@ -3,30 +3,39 @@ class Node:
         self.data = data
         self.link = link
 
+def dead():
+    global head
+    if head.link.link == head:
+        print(head.data)
+        print(head.link.data)
+        return False
+    else:
+        temp = head
+        head = temp.link.link.link
+        temp.link.link = head
+        return True
+
 def Enqueue(item):
     global head
     newNode = Node(item)
     if head == None: head = newNode
     else:
         pre = head
-        p = pre.link
-        while p and p.data<item:
-            pre = p
-            p=p.link
-        newNode.link = p
+        nxt = pre.link
+        while nxt and nxt.data<item:
+            pre = nxt
+            nxt=nxt.link
+        newNode.link = nxt
         pre.link = newNode
 
 
 head = None
-Enqueue(1)
-Enqueue(5)
-Enqueue(2)
-Enqueue(4)
-Enqueue(3)
-
+for i in range(1,42):
+    Enqueue(i)
 
 p = head
-while p!=None:
-    print(p.data)
+while p.link != None:
     p = p.link
-p = head
+p.link = head
+
+while dead(): pass

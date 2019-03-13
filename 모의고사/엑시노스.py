@@ -11,7 +11,7 @@ def func():
             for j in product(*i):
                 a = sol(j)
                 if a and a<my_max:
-                            my_max = a
+                    my_max = a
         if my_max != 987654321:
             return
         k-=1
