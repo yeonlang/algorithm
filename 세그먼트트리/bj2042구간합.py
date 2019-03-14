@@ -1,9 +1,5 @@
 import sys
-sys.stdin = open("indextree.txt","r")
-
-IDT = [0]*(1<<5)
-data = list(map(int,input().split()))
-howmany = len(data)
+sys.stdin = open("구간합.txt","r")
 
 def update(a,b):
     where = base +a -1
@@ -32,17 +28,24 @@ def RSQ(ffrom, to):
 
     if ffrom == to :
         ssum += IDT[ffrom]
-        print(ssum)
+    print(ssum)
 
+
+N,M,K = map(int,input().split())
 base = 1
-while base < howmany:
+while base <= N:
     base <<= 1
+IDT = [0]*(base*2)
 
-for now in range(base, howmany + base):
-    IDT[now] = data.pop(0)
+for now in range(base, N + base):
+    IDT[now] = int(input())
 
 for parent in range(base-1, 0, -1):
     IDT[parent] = IDT[parent*2]+IDT[parent*2+1]
 
-print(IDT)
-RSQ(2,4)
+for i in range(M+K):
+    a,b,c = map(int,input().split())
+    if a == 1:
+        update(b,c)
+    else:
+        RSQ(b,c)
