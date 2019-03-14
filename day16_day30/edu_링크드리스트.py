@@ -21,6 +21,6 @@ Enqueue(4)
 Enqueue(3)
 
 p = head
-while p!=None:
+while p != None:
     print(p.data)
     p = p.link
