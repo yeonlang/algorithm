@@ -1,8 +1,6 @@
 import sys
 sys.stdin = open("2진암호코드.txt","r")
 
-
-
 deco = [[[[-1]*5 for _ in range(5)] for _ in range(5)] for _ in range(5)]
 deco[3][2][1][1] = 0
 deco[2][2][2][1] = 1
