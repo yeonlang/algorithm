@@ -1,18 +1,18 @@
-def BTK(n,r,choice=0,i=0):
-    if choice == r:
+def BTK(choice):
+    global result
+    if choice==len(data):
         print(result)
         return
-    result[choice] = i+1
-    for idx in range(n):
-        if not visited[idx]:
-            visited[idx]=1
-            BTK(n,r,choice+1,idx+1)
-            visited[idx]=0
 
+    for i in range(len(data)):
+        if not visited[i]:
+            visited[i]=1
+            result[choice]=data[i]
+            BTK(choice+1)
+            result[choice]=0
+            visited[i]=0
 
-
-n = 5
-r = 3
-visited = [0]*n
-result = [0]*r
-BTK(5,3)
+data=[1,2,3,4,5]
+visited=[0]*len(data)
+result=[0]*len(data)
+BTK(0)
