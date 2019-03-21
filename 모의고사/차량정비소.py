@@ -19,22 +19,20 @@ for tc in range(int(input())):
 
     choice1 = []
     choice2 = []
-
     wait1 = []
     wait2 = []
-
     end = []
-    time = 0
 
+    time = 0
     while len(end) != people:
         for num in range(N1):
             if table1[num]:
                 table1[num][0]-=1
                 if table1[num][0] == 0:
-                    wait2.append((table1[num][1],time))
+                    wait2.append((table1[num][1],time,num))
                     table1[num] = 0
         if wait2:
-            wait2.sort(key=lambda x:(x[1],x[0]))
+            wait2.sort(key=lambda x:(x[1],x[2]))
 
         for num in range(N2):
             if table2[num]:
@@ -45,6 +43,7 @@ for tc in range(int(input())):
 
         while data and data[0][1] == time:
             wait1.append(data.pop(0))
+            wait1.sort(key=lambda x : x[0])
 
         while wait1:
             flag = True
@@ -62,7 +61,7 @@ for tc in range(int(input())):
 
         while wait2:
             flag = True
-            peoplenum,j = wait2.pop(0)
+            peoplenum,j,desk = wait2.pop(0)
             for num in range(N2):
                 if table2[num] == 0:
                     if num == B-1 and peoplenum in choice1:
@@ -71,11 +70,11 @@ for tc in range(int(input())):
                     flag = False
                     break
             if flag:
-                wait2.insert(0,(peoplenum,j))
+                wait2.insert(0,(peoplenum,j,desk))
                 break
-
         time+=1
+
     if choice2:
-        print(sum(choice2))
+        print("#{} {}".format(tc+1,sum(choice2)))
     else :
-        print(-1)
+        print("#{} {}".format(tc+1,-1))
