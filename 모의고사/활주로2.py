@@ -32,14 +32,14 @@ def read(data):
             continue
 
         x = N-1
-        while 0<=x:
-            if data[y][x]-data[y][x-1] == 1:
+        while 0<x:
+            if data[y][x-1]-data[y][x] == 1:
                 temp = x
                 for i in range(K):
-                    if visited[x]:
+                    if x>=N:
                         flag = False
                         break
-                    elif x>=N:
+                    elif visited[x]:
                         flag = False
                         break
                     else:
