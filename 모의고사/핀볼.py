@@ -1,67 +1,54 @@
 import sys
 sys.stdin = open("핀볼.txt","r")
 
-def nextdir(dir,r):
-    if dir == 0:
+def nxtdir(d,r):
+    if d == 0:
         if r in [1, 4, 5]:
-            dir = 1
-
+            d = 1
         elif r == 2:
-            dir = 3
-
+            d = 3
         elif r == 3:
-            dir = 2
-
-    elif dir == 1:
+            d = 2
+    elif d == 1:
         if r in [2, 3, 5]:
-            dir = 0
-
+            d = 0
         elif r == 1:
-            dir = 3
-
+            d = 3
         elif r == 4:
-            dir = 2
-
-
-    elif dir == 2:
+            d = 2
+    elif d == 2:
         if r in [3, 4, 5]:
-            dir = 3
-
+            d = 3
         elif r == 1:
-            dir = 0
-
+            d = 0
         elif r == 2:
-            dir = 1
-
-    elif dir == 3:
+            d = 1
+    elif d == 3:
         if r in [1, 2, 5]:
-            dir = 2
-
+            d = 2
         elif r == 3:
-            dir = 1
-
+            d = 1
         elif r == 4:
-            dir = 0
+            d = 0
+    return d
 
-    return dir
-
-def solution(start,dir):
+def solution(start,d):
     y,x = start
     ans = 0
     while True:
-        nx = x+dx[dir]
-        ny = y+dy[dir]
+        nx = x+dx[d]
+        ny = y+dy[d]
 
         # 다음 지점이 벽일때
         if nx < 0 or nx >= n or ny < 0 or ny >= n:
-            if dir == 0:
-                dir = 1
-            elif dir == 1:
-                dir = 0
-            elif dir == 2:
-                dir = 3
-            elif dir == 3:
-                dir = 2
+            if d == 0:
+                d = 1
+            elif d == 1:
+                d = 0
+            elif d == 2:
+                d = 3
+            elif d == 3:
+                d = 2
             ny = y
             nx = x
             ans += 1
@@ -74,7 +61,7 @@ def solution(start,dir):
         #다음지점이 블록일때
         if 1<= data[ny][nx] <=5:
             r = data[ny][nx]
-            dir = nextdir(dir,r)
+            d = nxtdir(d,r)
             ans += 1
             y = ny
             x = nx

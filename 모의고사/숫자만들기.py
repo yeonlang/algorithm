@@ -5,24 +5,21 @@ def cal(num,cnt,choice):
     if num == 0: return cnt+data[choice+1]
     elif num == 1: return cnt-data[choice+1]
     elif num == 2: return cnt*data[choice+1]
-    elif num == 3: return cnt//data[choice+1]+1 if cnt//data[choice+1]<0 else cnt//data[choice+1]
+    elif num == 3: return int(cnt/data[choice+1])
 
 def BTK(choice,N,cnt):
     global myMax , myMin
     if choice == N-1:
-        if cnt>myMax:
+        if cnt>=myMax:
             myMax = cnt
-        if cnt<myMin:
+        if cnt<=myMin:
             myMin = cnt
         return
 
     for i in range(4):
         if operator[i]>0:
             operator[i] -= 1
-            temp = cnt
-            cnt = cal(i,cnt,choice)
-            BTK(choice+1,N,cnt)
-            cnt = temp
+            BTK(choice+1,N,cal(i,cnt,choice))
             operator[i] += 1
 
 for tc in range(int(input())):

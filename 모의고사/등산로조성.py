@@ -1,9 +1,7 @@
 import sys
 sys.stdin = open("등산로조성.txt")
 
-def ispass(y,x):
-    return True if 0<=y<N and 0<=x<N else False
-
+def ispass(y,x): return True if 0<=y<N and 0<=x<N else False
 def BTK(y,x,flag):
     global cnt,result
     if cnt>result:
