@@ -54,10 +54,13 @@ def bfs(start_x):
                 ny += dy
                 nx += dx
                 if 0 <= ny < N and 0 <= nx < M :
-                    if myMap[ny][nx]:
+                    if 1< myMap[ny][nx] :
                         stack.append((ny, nx, myMap[ny][nx]))
                         myMap[ny][nx] = 0
                         cnt-=1
+                    elif myMap[ny][nx] == 1:
+                        myMap[ny][nx] = 0
+                        cnt -= 1
                     time -= 1
                 else:
                     break
@@ -85,26 +88,27 @@ for tc in range(int(input())):
     findtop()
     flag = True
 
-    for a in range(M):
-        if num == 1 and flag:
-            sol(a)
-            myMap = deepcopy(data)
-            continue
-        for b in range(M):
-            if num == 2 and flag:
-                sol((a,b))
-                myMap = deepcopy(data)
-                continue
-            for c in range(M):
-                if num == 3 and flag:
-                    sol((a,b,c))
-                    myMap = deepcopy(data)
-                    continue
-                for d in range(M):
-                    if num == 4 and flag:
-                        sol((a,b,c,d))
-                        myMap = deepcopy(data)
-                        continue
+    sol((1,))
+    # for a in range(M):
+    #     if num == 1 and flag:
+    #         sol(a)
+    #         myMap = deepcopy(data)
+    #         continue
+    #     for b in range(M):
+    #         if num == 2 and flag:
+    #             sol((a,b))
+    #             myMap = deepcopy(data)
+    #             continue
+    #         for c in range(M):
+    #             if num == 3 and flag:
+    #                 sol((a,b,c))
+    #                 myMap = deepcopy(data)
+    #                 continue
+    #             for d in range(M):
+    #                 if num == 4 and flag:
+    #                     sol((a,b,c,d))
+    #                     myMap = deepcopy(data)
+    #                     continue
     if myMin == 987654321:
         myMin = 0
     print("#{} {}".format(tc+1,myMin))
