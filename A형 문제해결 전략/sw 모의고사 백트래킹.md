@@ -1,5 +1,7 @@
 # sw 모의고사 백트래킹
 
+
+
 ## 숫자만들기
 
 ```python
@@ -208,8 +210,6 @@ print(result-myMin)
 
 
 
-
-
 ##  등산로 조성
 
 ```python
@@ -358,6 +358,5 @@ for tc in range(int(input())):
     BTK(0,-1)
     print("#{} {}".format(tc+1,myMin))
 ```
-
 
 
