@@ -4,20 +4,19 @@ sys.stdin = open("테트로미노.txt")
 def ispass(y,x): return True if 0<=y<N and 0<=x<M else False
 def BTK(r,y,x,result):
     global myMax
-    if dp[r][y][x] == -1:
 
-        if r == 4:
-            if result>myMax:
-                myMax = result
-            return
+    if r == 4:
+        if result>myMax:
+            myMax = result
+        return
 
-        for i in range(4):
-            ny = y + dy[i]
-            nx = x + dx[i]
-            if ispass(ny,nx) and not visited[ny][nx]:
-                visited[ny][nx] = 1
-                BTK(r+1,ny,nx,result+data[ny][nx])
-                visited[ny][nx] = 0
+    for i in range(4):
+        ny = y + dy[i]
+        nx = x + dx[i]
+        if ispass(ny,nx) and not visited[ny][nx]:
+            visited[ny][nx] = 1
+            BTK(r+1,ny,nx,result+data[ny][nx])
+            visited[ny][nx] = 0
 
 
 def bfs(y,x,d):
