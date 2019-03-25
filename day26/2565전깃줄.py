@@ -23,6 +23,6 @@ tree = [0]*(base*2)
 
 for now in range(base, N + base):
     idx = now-base+1
-    if 0<=idx<N and data[idx]>
+
 
 

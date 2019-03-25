@@ -4,15 +4,15 @@ sys.stdin = open("연구소.txt")
 def read():
     cnt = 0
     stack = birus[:]
-    visited2 = [[0]*M for _ in range(N)]
+    visited = [[0]*M for _ in range(N)]
     while stack:
         now = stack.pop()
-        visited2[now//M][now%M] = 1
+        visited[now//M][now%M] = 1
         for i in range(4):
             ny = now//M + dy[i]
             nx = now%M + dx[i]
-            if 0<=ny<N and 0<=nx<M and not data[ny][nx] and not visited2[ny][nx]:
-                visited2[ny][nx] = 1
+            if 0<=ny<N and 0<=nx<M and not data[ny][nx] and not visited[ny][nx]:
+                visited[ny][nx] = 1
                 cnt+=1
                 stack.append(nx+ny*M)
     return cnt
@@ -45,7 +45,7 @@ for i in range(N*M):
         result -= 1
     elif data[i//M][i%M] == 1:
         result -= 1
-visited = [[0]*M for _ in range(N)]
+
 myMin = 987654321
 BTK(0,0)
 

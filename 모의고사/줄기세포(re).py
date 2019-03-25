@@ -2,12 +2,17 @@ import sys
 sys.stdin = open("줄기세포.txt")
 
 class Cell:
+    num = 0
     def __init__(self,y,x,value):
+        Cell.num += 1
         self.y = y
         self.x = x
         self.life = value*2
         self.value = value
         self.spread = False
+
+    def __del__(self):
+        Cell.num -= 1
 
 def spread():
     que.sort(key = lambda x : x.value,reverse = True)
@@ -39,7 +44,8 @@ dy = [-1,0,1,0]
 dx = [0,1,0,-1]
 
 for tc in range(int(input())):
-    N,M,K = map(int,input().split())
+    N,M,K = map(int, input().split())
+
     offset = K // 2 + 1
     lm = M + 2 * offset
     ln = N + 2 * offset
@@ -57,7 +63,8 @@ for tc in range(int(input())):
         spread()
         t+=1
     read()
-    print("#{} {}".format(tc + 1, len(que)))
+
+    print("#{} {}".format(tc + 1, Cell.num))
 
 
 
