@@ -1,3 +1,9 @@
+def Power(a,b):
+    t = 1
+    for i in range(1,b+1):
+        t *= a
+    return t
+
 def Power1(a,b):
     if b==0: return 1
     elif b == 1 : return a
@@ -14,5 +20,6 @@ def Power2(a,b):
         b//=2
     return ans
 
-print(Power1(3,2))
-print(Power2(3,2))
+print(Power(4,5))
+print(Power2(4,5))
+print(Power2(4,5))
