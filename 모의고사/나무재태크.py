@@ -29,7 +29,7 @@ def spread(self):
         ny = self.y+dy[i]
         nx = self.x+dx[i]
         if ispass(ny,nx):
-            que.append(tree(nx,ny,1))
+            que.append(tree(ny,nx,1))
 
 def winter():
     for y in range(N):
@@ -43,7 +43,7 @@ plus = [list(map(int,input().split())) for _ in range(N)]
 data=[[5]*N for _ in range(N)]
 que = []
 for i in range(M):
-    x,y,age = map(int,input().split())
+    y,x,age = map(int,input().split())
     que.append(tree(y-1,x-1,age))
 
 
