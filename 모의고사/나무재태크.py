@@ -22,6 +22,8 @@ class tree:
     def fall(self):
         if not self.age%5:
             self.spread = True
+        else:
+            self.spread = False
 
 def ispass(y,x): return True if 0<=y<N and 0<=x<N else False
 def spread(self):
@@ -29,7 +31,7 @@ def spread(self):
         ny = self.y+dy[i]
         nx = self.x+dx[i]
         if ispass(ny,nx):
-            que.append(tree(ny,nx,1))
+            que[ny*N+nx].append(tree(ny,nx,1))
 
 def winter():
     for y in range(N):
@@ -40,36 +42,42 @@ dy = [-1,-1,-1, 0,0, 1,1,1]
 dx = [-1, 0, 1,-1,1,-1,0,1]
 N,M,K = map(int,input().split())
 plus = [list(map(int,input().split())) for _ in range(N)]
-data=[[5]*N for _ in range(N)]
-que = []
+data = [ [5]*N for _ in range(N)]
+que = [ []*N for _ in range(N) for _ in range(N)]
 for i in range(M):
     y,x,age = map(int,input().split())
-    que.append(tree(y-1,x-1,age))
-
+    que[N*(y-1)+(x-1)].append(tree(y-1,x-1,age))
 
 t = 0
 while t != K:
-    que.sort(key=lambda x: x.age)
     for i in range(len(que)):
-        que[i].spring()
-    s = 0
-    while s!= len(que):
-        if que[s].summer():
-            data[que[s].y][que[s].x] += que[s].age//2
-            del que[s]
-            continue
-        s+=1
+        if que[i]:
+            que[i].sort(key= lambda x:x.age)
+            for j in range(len(que[i])):
+                que[i][j].spring()
 
-    l = len(que)
-    for i in range(l):
-        que[i].fall()
-        if que[i].spread:
-            spread(que[i])
-
+    for i in range(len(que)):
+        if que[i]:
+            s = 0
+            while s!= len(que[i]):
+                if que[i][s].summer():
+                    data[que[i][s].y][que[i][s].x] += que[i][s].age//2
+                    del que[i][s]
+                    continue
+                s+=1
+    for i in range(len(que)):
+        if que[i]:
+            l = len(que[i])
+            for s in range(l):
+                que[i][s].fall()
+                if que[i][s].spread:
+                    spread(que[i][s])
     winter()
     t+=1
-
-print(len(que))
+cnt = 0
+for i in range(N**2):
+    if que[i]: cnt+= len(que[i])
+print(cnt)
 
 
 
