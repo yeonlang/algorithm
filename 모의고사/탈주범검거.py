@@ -9,7 +9,6 @@ def judge(y,x,originy,originx):
             return True
     return False
 
-
 def search(y,x):
     que = [(y,x)]
     while que:
@@ -31,10 +30,9 @@ def solution():
                 count+=1
     return count
 
-
 for tc in range(int(input())):
     n,m,start_y,start_x,K = map(int,input().split())
-    data = [ list(map(int,input().split())) for _ in range(n)]
+    data = [list(map(int,input().split())) for _ in range(n)]
     visited = [[0]*m for _ in range(n)]
 
     dir_num = [0,4,2,2,2,2,2,2]

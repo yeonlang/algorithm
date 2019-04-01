@@ -9,7 +9,6 @@ class Cell:
         self.value = value
         self.spread = False
 
-
 def spread():
     que.sort(key = lambda x : x.value,reverse = True)
     i = 0

@@ -1,5 +1,6 @@
 import sys
 sys.stdin = open("연산.txt")
+
 from collections import deque
 def ispass(N): return True if 0<N<=1000000 else False
 def BFS(start):

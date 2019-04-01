@@ -6,7 +6,7 @@ def trans(d):
     if d == 0:
         cube.top,cube.left,cube.bottom,cube.right = cube.left,cube.bottom,cube.right,cube.top
     elif d == 1:
-        cube.top, cube.left, cube.bottom, cube.right = cube.right, cube.top, cube.left, cube.bottom,
+        cube.top, cube.left, cube.bottom, cube.right = cube.right, cube.top, cube.left, cube.bottom
     elif d == 2:
         cube.top,cube.front,cube.bottom,cube.back = cube.front,cube.bottom,cube.back,cube.top
     elif d == 3:
