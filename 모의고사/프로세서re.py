@@ -16,8 +16,9 @@ def func(y,x,d):
 def BTK(c):
     global maxchoice, minlength
 
-    if c>maxchoice:
+    if c>maxchoice: pass
 
+    for i in core[c]: pass
 
 dy = [-1,0,1,0]
 dx = [0,1,0,-1]
@@ -26,14 +27,18 @@ for tc in range(int(input())):
     N = int(input())
     data = [list(map(int,input().split())) for _ in range(N)]
 
-    core = defaultdict(lambda : [])
+    core = []
     for y in range(1,N-1):
         for x in range(1,N-1):
             if data[y][x]:
+                lst = []
                 for d in range(4):
                     temp = func(y,x,d)
                     if temp:
-                        core[(y,x)].append(temp)
+                        lst.append(temp)
+                if lst:
+                    core.append(lst)
+
     maxchoice = 0
     minlength = 987654321
 
