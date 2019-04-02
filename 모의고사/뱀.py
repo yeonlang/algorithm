@@ -18,8 +18,6 @@ def search(hy,hx,ry,rx,d):
         hx+=dx[d]
         if end(hy,hx):
             return time+1
-        if data[hy][hx] == 1:
-            pass
         if not data[hy][hx] :
             data[ry][rx] = 0
             if dr+direct[r]>3:
