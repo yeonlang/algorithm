@@ -26,7 +26,7 @@ for tc in range(int(input())):
     ans = -1
 
     for y in range(N-2):
-        for x in range(N):
+        for x in range(N-1):
             visited = set([data[y][x]])
             BTK(y,x,y,x,0)
 
