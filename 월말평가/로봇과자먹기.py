@@ -1,6 +1,3 @@
-import sys
-sys.stdin = open("로봇과자먹기.txt")
-
 def BTK(c,cnt):
     global myMin
     if c == N:

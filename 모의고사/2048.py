@@ -14,7 +14,7 @@ def turn(data,d):
                     data[y][x] = 0
 
             i = len(temp)-1
-            while 0<=i:
+            while 0<i:
                 if temp[i] == temp[i-1]:
                     temp[i] = temp[i]+temp[i-1]
                     del temp[i-1]
@@ -60,7 +60,6 @@ def turn(data,d):
                 if temp[i] == temp[i+1]:
                     temp[i] = temp[i] + temp[i+1]
                     del temp[i+1]
-                    i+=1
                 i += 1
 
             x = 0
@@ -80,7 +79,6 @@ def turn(data,d):
                 if temp[i] == temp[i+1]:
                     temp[i] = temp[i] + temp[i+1]
                     del temp[i+1]
-                    i+=1
                 i += 1
 
             y = 0

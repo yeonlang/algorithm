@@ -1,6 +1,3 @@
-import sys
-sys.stdin = open("6등분하기.txt")
-
 def select(choice,idx,visited,number):
     global myMax
     if choice == 3:
