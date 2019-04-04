@@ -7,7 +7,7 @@ def cal(num,cnt,choice):
     elif num == 2: return cnt*data[choice+1]
     elif num == 3: return int(cnt/data[choice+1])
 
-def BTK(choice,N,cnt):
+def BTK(choice,cnt):
     global myMax , myMin
     if choice == N-1:
         if cnt>=myMax:
@@ -19,7 +19,7 @@ def BTK(choice,N,cnt):
     for i in range(4):
         if operator[i]>0:
             operator[i] -= 1
-            BTK(choice+1,N,cal(i,cnt,choice))
+            BTK(choice+1,cal(i,cnt,choice))
             operator[i] += 1
 
 for tc in range(int(input())):
@@ -30,7 +30,7 @@ for tc in range(int(input())):
 
     myMax = -987654321
     myMin = 987654321
-    BTK(0,N,data[0])
+    BTK(0,data[0])
 
     print("#{} {}".format(tc+1,myMax-myMin))
 

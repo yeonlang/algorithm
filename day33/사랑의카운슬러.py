@@ -3,6 +3,7 @@ sys.stdin = open("사랑의카운슬러.txt")
 
 def DFS(c, cntA, cntB, sumX, sumY):
     global myMin
+    if cntA>half or cntB>half: return
     if cntA==half and cntB==half:
         temp = sumX**2+sumY**2
         if temp<myMin or myMin == -1:
