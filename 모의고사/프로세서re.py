@@ -1,7 +1,6 @@
 import sys
 sys.stdin = open("엑시노스.txt")
 
-from collections import defaultdict
 def func(y,x,d):
     s = set()
     while True:
@@ -13,12 +12,18 @@ def func(y,x,d):
         if y == N-1 or x == N-1 or y == 0 or x == 0:
             return s
 
-def BTK(c):
-    global maxchoice, minlength
+def BTK(c,K,myset,cnt):
+    global myMin,flag
+    if c == K:
+        if cnt<myMin:
+            myMin = cnt
+        return
 
-    if c>maxchoice: pass
-
-    for i in core[c]: pass
+    for i in core[c]:
+        nxtcnt = cnt+len(i)
+        nxtset = myset|i
+        if nxtcnt != len(nxtset): continue
+        BTK(c+1,K,nxtset,nxtcnt)
 
 dy = [-1,0,1,0]
 dx = [0,1,0,-1]
@@ -26,7 +31,7 @@ dx = [0,1,0,-1]
 for tc in range(int(input())):
     N = int(input())
     data = [list(map(int,input().split())) for _ in range(N)]
-
+    INF = 987654321
     core = []
     for y in range(1,N-1):
         for x in range(1,N-1):
@@ -39,6 +44,14 @@ for tc in range(int(input())):
                 if lst:
                     core.append(lst)
 
-    maxchoice = 0
-    minlength = 987654321
+    res = len(core)
+    while res:
+        flag = False
+        myMin = INF
+        BTK(0,res,set(),0)
+        if myMin != INF:
+            break
+        res-=1
+    print("#{} {}".format(tc+1,myMin))
+
 
