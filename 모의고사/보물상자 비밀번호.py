@@ -2,7 +2,7 @@ import sys
 sys.stdin = open("보물상자 비밀번호.txt")
 
 def trans(s):
-    if ord('1')<=ord(s)<=ord('9'):
+    if ord('0')<=ord(s)<=ord('9'):
         return int(s)
     else:
         return ord(s)-55
