@@ -1,0 +1,54 @@
+#
+#
+# data = ['A','B','C','D','E']
+#
+# N=len(data)
+# M=5
+#
+# index_fuel = [3,1,1,1,1]
+#
+# A=[0]*M
+# def go(now_index):
+#
+#     global N,M
+#
+#     if now_index==M:
+#         print(A)
+#         return
+#
+#     for i in range(0,N):
+#         if index_fuel[i]>0:
+#             index_fuel[i]-=1
+#             A[now_index]=data[i]
+#             go(now_index+1)
+#             index_fuel[i] +=1
+#
+# go(0)
+
+
+
+data = ['A','B','C','D','E']
+can = [5,5,5,5,5]
+A=[0]*3
+
+def go(now_index):
+    global N,M
+    if now_index==M:
+        for i in range(0,M):
+            print(data[A[i]],end='')
+        print()
+        return
+    for i in range(0,N):
+        if can[i]>0:
+            if now_index>0:
+                if A[now_index-1]>i:
+                    continue
+            can[i]-=1
+            A[now_index]=i
+            go(now_index+1)
+            can[i] +=1
+
+N=len(data)
+M=3
+
+go(0)

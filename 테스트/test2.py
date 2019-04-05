@@ -1,16 +1,18 @@
-class T:
-    def __init__(self,i):
-        self.i = i
+import random as ra
 
-a = T(1)
-b = T(2)
-c = T(3)
-
-lst = []
-lst.append(a)
-lst.append(b)
-lst.append(c)
-
-
-
-print(lst[1].i)
+name=[
+'권령경', '김영훈', '조현진', '조영현', '김유림',
+'김미진', '송현우', '신인택', '서민수', '엄윤주',
+'강현구', '여성우', '양도혁', '하창언', '박재휘',
+'이지현', '서민호', '진민재', '이현수', '권민재',
+'김교훈', '박재형', '윤종원', '강대현', '이규진'
+]
+ra.shuffle(name)
+print("앞문")
+k = 0
+while k<25:
+    print(name[k],end =" ")
+    if k%5 == 4:
+        print()
+    k+=1
+print("뒷문")
