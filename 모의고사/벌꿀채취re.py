@@ -17,7 +17,7 @@ def solve(c,idx,result,data):
 
     for i in range(idx,M):
         result.append(i)
-        solve(c+1,idx+1,result,data)
+        solve(c+1,i+1,result,data)
         result.pop()
 
 def DFS(c,idx):
@@ -52,7 +52,7 @@ for tc in range(int(input())):
     result = [0,0]
     myMax = 0
     DFS(0,0)
-    print(myMax)
+    print("#{} {}".format(tc+1,myMax))
 
     # 1 174
     # 2 131

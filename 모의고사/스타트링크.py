@@ -31,6 +31,7 @@ def BTK(choice,idx):
 N = int(input())
 data = [list(map(int,input().split())) for _ in range(N)]
 visited = [0]*N
+visited[0] = 1
 myMin = 987654321
-BTK(0,0)
+BTK(1,1)
 print(myMin)
