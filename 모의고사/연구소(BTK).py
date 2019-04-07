@@ -2,19 +2,21 @@ import sys
 sys.stdin = open("연구소.txt")
 
 def read():
-    cnt = 0
     stack = birus[:]
-    visited = [[0]*M for _ in range(N)]
     while stack:
         now = stack.pop()
-        visited[now//M][now%M] = 1
         for i in range(4):
             ny = now//M + dy[i]
             nx = now%M + dx[i]
-            if 0<=ny<N and 0<=nx<M and not data[ny][nx] and not visited[ny][nx]:
-                visited[ny][nx] = 1
-                cnt+=1
+            if 0<=ny<N and 0<=nx<M and not data[ny][nx]:
+                data[ny][nx] = 3
                 stack.append(nx+ny*M)
+    cnt = 0
+    for y in range(N):
+        for x in range(M):
+            if data[y][x] == 3:
+                data[y][x] = 0
+                cnt+=1
     return cnt
 
 def BTK(choice, idx):

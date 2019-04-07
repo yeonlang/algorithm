@@ -1,14 +1,17 @@
 import sys
 sys.stdin = open("종이붙이기.txt")
 
-def read(sy,sx,val,tp):
+def read(sy,sx,val):
     for y in range(sy,sy+val):
         for x in range(sx,sx+val):
-            if not tpdata[y][x]:
+            if not data[y][x]:
                 return False
-            else:
-                tp.append((y,x))
     return True
+
+def fill(sy,sx,val,num):
+    for y in range(sy,sy+val):
+        for x in range(sx,sx+val):
+            data[y][x] = num
 
 def DFS(c):
     global myMin,flag
@@ -22,16 +25,13 @@ def DFS(c):
             continue
         for y in range(N-val+1):
             for x in range(N-val+1):
-                temp = []
-                if read(y,x,val,temp):
+                if read(y,x,val):
                     op[val]-=1
-                    for u,v in temp:
-                        tpdata[u][v] = 0
+                    fill(y,x,val,0)
                     DFS(c+1)
                     if flag:
                         return
-                    for u,v in temp:
-                        tpdata[u][v] = 1
+                    fill(y,x,val,1)
                     op[val]+=1
         return
 
@@ -50,15 +50,11 @@ for n1 in range(6):
             for n4 in range(6):
                 for n5 in range(6):
                     if n1*(1**2) + n2*(2**2) + n3*(3**2) + n4*(4**2) + n5*(5**2) == dtcnt:
-                        candidate.append((0,n1,n2,n3,n4,n5))
+                        candidate.append([0,n1,n2,n3,n4,n5])
 myMin = -1
 flag = False
 candidate.sort(key = lambda x: sum(x))
-for temp in candidate:
-    tpdata = []
-    for i in range(N):
-        tpdata.append(data[i])
-    op = list(temp)
+for op in candidate:
     DFS(0)
     if flag:
         break
