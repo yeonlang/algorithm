@@ -19,9 +19,10 @@ def array(data):
             data[y][x] = data[y-1][x]
             if y == N-1:
                 data[y][x] = 0
-            data[y-1][x] = 0
             if data[y][x]:
                 tpp.append((y,x))
+            data[y-1][x] = 0
+
 
 def solve(data,people):
     cnt = 0
@@ -80,6 +81,7 @@ for tc in range(int(input())):
         for x in range(M):
             if data[y][x]:
                 people.append((y,x))
+
     myMax = 0
     select = [0,0,0]
     DFS(0,0)

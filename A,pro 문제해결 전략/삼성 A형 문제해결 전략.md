@@ -1,8 +1,427 @@
-# 삼성 A형 문제해결 전략
+# 1. 완전탐색(경우의 수 구현)
+
+* 완전 탐색의 기본은 모든 경우의 수를 살펴보는 것이다. 따라서 경우의 수를 구하는 기법인 조합, 순열, 중복조합, 중복 순열, 부분집합 등의 개념이 필요하게 된다. 
+* 백준의 연구소 <https://www.acmicpc.net/problem/14502>문제를 예시로 생각해보자.
+* 이 문제의 핵심은 벽을 3개 세우는 모든 경우의 수를 탐색하는 것이다. 벽을 세우는 순서는 관계없기 때문에 우리는 벽을 세울수 있는 위치를 구한후 그 중 3개의 위치에 벽을 세우는 조합마다 바이러스가 어떻게 퍼지는 지를 계산하여 문제를 풀 수 있다는 접근법을 떠올릴 수 있다. 
+* 따라서 처음에는 위와같은 경우의 수를 반복문과 재귀를 사용해서 구현하는 것을 익히는 것이 선행 되야한다. 아래에는 재귀로 경우의 수를 구하는 코드 예시이다.
+
+### 조합
+
+```python
+# 조합
+def combi1(c,idx):
+    if c == K:
+        print(result)
+        return
+
+    for i in range(idx,N):
+        result[c] = i
+        combi1(c+1,i+1)
+        
+N = 5
+K = 3
+data = [1,2,3,4,5]
+result = [0]*K
+combi1(0,0)
+```
 
 
 
-## 백트래킹
+### 순열
+
+```python
+# 순열
+def permu1(c):
+    if c == K:
+        print(result)
+        return
+
+    for i in range(N):
+        if not visited[i]:
+            visited[i] = 1
+            result[c] = i
+            permu1(c+1)
+            visited[i]=0
+
+N = 5
+K = 3
+data = [1,2,3,4,5]
+visited = [0]*N
+result = [0]*K
+
+permu1(0)
+```
+
+
+
+### 중복순열
+
+```python
+# 중복 순열
+def permu2(c):
+    if c == K:
+        print(result)
+        return
+
+    for i in range(N):
+        result[c] = i
+        permu2(c+1)
+N = 5
+K = 3
+data = [1,2,3,4,5]
+result = [0]*K
+```
+
+
+
+### 중복조합
+
+```python
+# 중복 조합
+def combi2(c,idx):
+    if c == K:
+        print(result)
+        return
+
+    for i in range(idx,N):
+        result[c] = i
+        combi2(c+1,i)
+N = 5
+K = 3
+data = [1,2,3,4,5]
+result = [0]*K
+combi2(0,0)
+```
+
+
+
+### 부분집합
+
+```python
+# 부분집합
+def subset(c,idx):
+    print(result[:c])
+
+    if c==N:
+        return
+
+    for i in range(idx,N):
+        result[c] = i
+        subset(c+1,i+1)
+
+N = 3
+data = [1,2,3]
+result = [0]*N
+subset(0,0)
+```
+
+
+
+# 2. 이차원 좌표에서 문제조건 구현하기
+
+## 좌표 탐색
+
+- 2차원을 탐색할 때에는 두가지 방식이 많이 쓰인다.
+
+- 그 중 익숙해진다면 쉽게 구현이 가능한 방식이 이동방향을 저장하는 배열을 만들어 다음 이동위치를 제어하는 것이다.
+
+```python
+가장 기본적인 dy,dx는 다음과 같다.
+# 상하좌우
+dy = [-1,1,0,0]
+dx = [0,0,-1,1]
+# 우하 좌하 좌상 우상
+dy = [1,1,-1,-1]
+dx = [1,-1,-1,1]
+
+추가적으로 배열의 순서등을 원하는 대로 구성 한 후에 다음과 같은 작업도 가능하다.
+# 상하좌우  
+dy = [-1,1,0,0]
+dx = [0,0,-1,1]
+
+# 반대방향을 리턴(상->하, 하->상, 좌->우, 우->좌)
+def turn(d):
+    return d-1 if d%2 else d+1
+
+# 내가 전에 왔던 좌표 구하기
+yy = y-dy[d]
+xx = x-dx[d]
+
+그런데 몇몇 문제에서는 주어지는 조건에 따라 갈 수 있는 방향이 달라지는 경우가 있다. 이때 이차원 dy,dx를 통하여 다음과 같이 구현해 볼 수 있다.
+
+백준의 파이프 문제를 예를 들면 다음과 같다. 
+각 조건에 맞는 방향을 2차원 dy,dx 로 구현한다.
+dy = [[0,1],[1,1],[0,1,1]]
+dx = [[1,1],[0,1],[1,0,1]]
+
+각 인덱스마다 갈 수 있는 방향의 갯수가 다르기 때문에 이것을 조절하기 위한 1차원 배열을 만들어준다.
+nowdir = [2,2,3]
+
+이렇게 갈 수 있는 방향이 특정되면 다음과 같이 현재의 방향(d)에 따라 다음 갈 방향이 어디인지 탐색할 수 있다.
+for nd in range(nowdir[d]):
+	ny = y+dy[d][nd]
+	nx = x+dx[d][nd]
+    BTK(ny,nx,nd)    
+```
+
+
+
+- 다음은 좌표를 직접 저장해서 원하는 조건에 대한 좌표만 탐색하는 것이다. 이 방식은 좌표를 업데이트 해야하는 경우도 있고, 좌표만 가지고 원하는 조건을 구현하는 것이 어려울 수 있지만, 이차원 배열을 직접 탐색하며 갱신하는 방식보다는 훨씬 좋은 시간복잡도를 구현 할 수 있고, 익숙해 진다면 빠르게 코딩이 가능하기 때문에 유용하게 사용된다.  백준 캐슬디펜스 풀이코드를 살펴보며 어떻게 사용되는지 익혀보자.
+
+```python
+def array(data):
+    global tpp
+    # tpp의 갱신이 DFS함수에 반영되도록 전역변수로 설정
+    tpp = []
+    # x축을 기준으로 탐색하며 y좌표를 성벽으로 당겨주고 살아있는 적군의 위치를 tpp에 다시 저장
+    for x in range(M):
+        for y in range(N-1,0,-1):
+            data[y][x] = data[y-1][x]
+            if y == N-1:
+                data[y][x] = 0
+            data[y-1][x] = 0
+            if data[y][x]:
+                tpp.append((y,x))
+
+def solve(data,people):
+    cnt = 0
+    # 궁수가 동시 조준하는 경우 카운트 중복을 막기위해 set사용
+    tpset = set()
+    # 조건에 맞는 각 궁수의 조준하는 적을 탐색
+    for i in range(3):
+        #x좌표는 궁수를 배치한 select에 저장된 위치, y는 성벽에 해당하는 N-1좌표를 할당
+        y,x = N-1,select[i]
+
+        # 배열의 크기를 넘는 초기값 설정, 갱신이 되지 않을 시에는 값이 유지
+        tpmax = 9999
+        ty, tx = 99, 99
+
+        # 적군의 좌표배열을 읽어온다.
+        for py,px in people:
+            l = abs(py-y)+abs(px-x)
+            # 사거리 안에 있고, 기존에 선택한 적군의 거리와 같지만, 적군의 x좌표가 더 작다면 갱신
+            if l <= D and l == tpmax and px<tx:
+                ty,tx = py,px
+            # 사거리 안에 있고, 기존에 선택한 가장 가까운 적군보다 더 가깝다면 갱신
+            if l <= D and l < tpmax:
+                tpmax = l
+                ty,tx = py,px
+
+        # 사거리 내의 적군이 선택이 되었다면(선택이 안되었다면 tp, ty가 99) 좌표를 저장
+        if ty != 99 and tx!= 99:
+            tpset.add((ty,tx))
+    # set의 성질에 의해 중복좌표가 없기 때문에 cnt에 set의 길이를 추가
+    cnt += len(tpset)
+    # 죽은 적군의 좌표를 탐색하며 0으로 tpdata를 갱신
+    for y,x in tpset:
+        data[y][x] = 0
+    return cnt
+
+def DFS(c,idx):
+    global myMax,tpp
+    #궁수 3명의 위치가 선택되면
+    if c == 3:
+        #원래 데이터를 유지하기 위해 2차원 배열과 적군의 좌표를 복사
+        tpp = people[:]
+        tpdata = []
+        for u in range(N):
+            tpdata.append(data[u][:])
+        cnt = 0
+        # 남아있는 적군이 있다면(tpp에 살아있는 적군의 좌표가 저장되어 있음) 작업을 계속 수행
+        while tpp:
+            # 죽인적의 수를 cnt에 추가
+            cnt += solve(tpdata,tpp)
+            # 적군을 성벽으로 한칸 당겨오고 tpdata와 tpp를 업데이트
+            array(tpdata)
+        # 죽인 적군의 수가 지금까지의 최대값보다 높다면 myMax 갱신
+        if cnt>myMax:
+            myMax = cnt
+        return
+
+    for i in range(idx,M):
+        select[c] = i
+        DFS(c+1,i+1)
+
+N,M,D = map(int,input().split())
+# 적군의 정보가 있는 2차원 배열 구현
+data = [list(map(int,input().split())) for _ in range(N)]
+# 0으로 된 성벽의 정보를 2차원 배열에 추가해준다.
+tp = [0]*M
+data.append(tp)
+N+=1
+
+# people 에 적군의 좌표를 저장
+people = []
+for y in range(N):
+    for x in range(M):
+        if data[y][x]:
+            people.append((y,x))
+
+myMax = 0
+# 궁수의 위치를 기록할 배열
+select = [0,0,0]
+# DFS로 조합 구현
+DFS(0,0)
+print(myMax)
+```
+
+
+
+## BFS 
+
+- 완전 탐색에 있어 가장 대표적인 것은 BFS이다. 가장 가까운 거리를 구하라,  몇 시간안에 퍼지는 영역을 구하라 등 내가 시작한 위치에서의 시간,거리 등이 연관 되어 있을 때에 자주 쓰인다. 
+- (단, que를 리스트로 구현하여 pop(0)를 사용하는 것은 매우 지양해야한다. 원소를 지우고 한칸씩 당겨오는데에 O(n)의 시간 복잡도가 필요하기 때문이다. 이 구현이 필요하다면 deque자료구조를 사용하도록 한다.)
+- 아래에 쓰이는 코드를 보고 어떤 식으로 사용되는지 살펴보자.
+- SWEA 탈주범 검거
+- 탈주범은 시간마다 연결된 파이프로 이동할 수 있다.  시간동안 이동할 수 있는 모든 위치를 구해야 하는데 이부분은 다음 칸에 이동할 수 있는지 판단하는 함수만 구현한다면 BFS로 쉽게 답을 구할 수 있다.(예시 코드에서는 다 방문한 후에 visited를 세면서 count를 구하였는데 실제로는 방문해 주는 시점에 count를 +해주면서 바로 답을 구하면 시간복잡도를 낮출 수 있다. )
+
+```python
+# 내가 갈 다음위치에서 원래위치로 돌아올 수 있는지 탐색하는 함수
+def judge(y,x,originy,originx):
+    # 다음위치에서 이동할 수 있는칸에
+    for i in range(dir_num[data[y][x]]):
+        ny = y + dy[data[y][x]][i]
+        nx = x + dx[data[y][x]][i]
+        # 원래의 칸이 있다면 return True 아니면 False
+        if ny == originy and nx == originx:
+            return True
+    return False
+
+#BFS
+def search(sy,sx):
+    que = [(sy,sx)]
+    visited[sy][sx] = 1
+    while que:
+        y,x = que.pop(0)
+        for i in range(dir_num[data[y][x]]):
+            ny = y + dy[data[y][x]][i]
+            nx = x + dx[data[y][x]][i]
+            # 다음 좌표가 범위 안에 위치하고, 다음 위치에 방문도 가능하며, 지금까지 방문하지 않았다면
+            if 0<=ny<n and 0<=nx<m and judge(ny,nx,y,x) and not visited[ny][nx]:
+                visited[ny][nx] = visited[y][x]+1
+                # 거리가 K보다 커진다면 return
+                if visited[ny][nx] > K:
+                    return
+                que.append((ny,nx))
+
+# visited를 탐색하며 방문한 위치들을 count에 더해준다.
+def solution():
+    count=0
+    for y in range(n):
+        for x in range(m):
+            if 0<visited[y][x]<=K:
+                count+=1
+    return count
+
+for tc in range(int(input())):
+    n,m,start_y,start_x,K = map(int,input().split())
+    data = [list(map(int,input().split())) for _ in range(n)]
+    visited = [[0]*m for _ in range(n)]
+    
+    # 다차원 방향좌표 설정
+    # 파이프 번호에 따른 이동방향 배열로 구현
+    dir_num = [0,4,2,2,2,2,2,2]
+             #상하좌우,   상하,   좌우,    상우,   우하,   하좌,   좌상
+    dx = [0,[0, 0, -1, 1],[0, 0], [-1, 1],[0, 1], [1, 0], [0, -1], [-1, 0]]
+    dy = [0,[-1, 1, 0, 0],[-1, 1], [0, 0],[-1, 0], [0, 1], [1, 0], [0, -1]]
+
+    search(start_y,start_x)
+    print("#{} {}".format(tc+1,solution()))
+```
+
+
+
+## 우선순위 구현
+
+* 파이썬의 sorting 함수는 일반적으로 nlogn의 시간복잡도를 가진다. 하지만 배열의 크기가 작다면 위의 시간복잡도는 의미가 없어지기 때문에 key값을 이용한 sorting으로 매우 편하게 원하는 순서대로 배열을 정렬할 수 있다. 
+* 또한 복잡한 완전탐색에서 우선순위 queue를 임시로 구현하여 다음 탐색지점이나 다음 행동순서를 정한다면 문제의 깔끔한 풀이가 떠오르지 않을 때에도 답을 구현하는 데에는 성공할 수 있기 때문에 답을 구하기에는 매우 유용한 테크닉이다.  
+* 깔끔하고 아름다운 방식은 아니기 때문에 아래 예시 문제를 풀어보고 필요한 부분만 받아들여 사용하도록 하자.
+* 아기상어( 전체코드 : <https://www.acmicpc.net/source/12337387>)
+
+```python
+# 잡아먹을 수 있는 물고기의 좌표를 fish에 저장 한 후 fish를 거리순으로, 거리가 같다면 x좌표를 기준으로 정렬 하여 잡아먹는 작업을 수행하였다. 
+if fish:
+    fish.sort(key=lambda x: (x[0], x[1]))
+    yy, xx = fish.pop(0)
+    result += visited[yy][xx]
+    cnt += 1
+    if cnt == big:
+        cnt = 0
+        big += 1
+    start_y, start_x = yy, xx
+    data[yy][xx] = 0
+    return True
+```
+
+* 줄기세포
+
+  
+
+  
+
+* 추가적으로 SWEA의 차량정비소, 줄기세포 등의 우선순위도 위와같은 방식을 응용하여 사용할 수 있다.
+
+
+
+## 2차원 배열의 업데이트
+
+*  벽돌을 부숴서 새롭게 배열을 정렬하거나, SWEA 활주로 문제처럼 일반적인 for문 while문을 단순사용하게 되면 구현이 까다롭게 느껴지는 경우가 있다. 
+* 이때 임시적인 1차원 배열에 정보를 저장하고 그 정보만을 업데이트 하는 방식으로 조금 편하게 구현이 가능하다.
+
+* 2048(오른쪽으로 미는 경우)
+
+```python
+def turn(data,d):
+    if d == 0:
+        for y in range(N):
+            # 임시 배열을 만들어준다.
+            temp = []
+            # 임시 배열에 정보를 append 한 후 data 배열은 0으로 초기화한다
+            for x in range(N):
+                if data[y][x]:
+                    temp.append(data[y][x])
+                    data[y][x] = 0
+			
+            # while문을 돌면서 temp배열에 같은 숫자는 합쳐준다.
+            i = len(temp)-1
+            while 0<i:
+                if temp[i] == temp[i-1]:
+                    temp[i] = temp[i]+temp[i-1]
+                    del temp[i-1]
+                    i-=1
+                i-=1
+			# 합쳐진 값으로 data배열을 업데이트 한다.
+            x = N-1
+            while temp:
+                data[y][x] = temp.pop()
+                x-=1
+```
+
+* cnt 배열 사용
+
+```python
+for x in range(M):
+    # 1로 초기화 된 배열을 생성
+    cnt = [1]*N
+    for y in range(N-1):
+        # data[y+1][x]가 data[y][x] 와 같다면 cnt[y+1]은 cnt[y]+1 아니라면 1 
+        cnt[y+1]= cnt[y]+1 if data[y][x] == data[y+1][x] else 1
+       	# 현재 셀이 성능검사를 통과했다면 다음 셀 검사
+    	if cnt[y+1]>=K:
+            break
+        # 통과하지 못했다면 return
+        if y == N-2 and cnt[y+1]<K:
+            return
+# 모든 셀이 성능 검사를 통과하였고 현재 주입한 약품의 횟수가 이전 Min값보다 작다면 Min값 갱신
+if c<myMin:
+    myMin = c
+```
+
+
+
+
+
+# 백트래킹
 
 ```
  완전 탐색의 경우 2차원 배열을 탐색하는 경우가 많이 나온다. 이때 여러가지 조건을 주게 되는데 보통 이 조건 모두를 테스트 해야하는 경우가 많아 조합이나 순열 등의 경우의 수를 찾아보게 된다. 
@@ -21,75 +440,11 @@ ex: 등산로조성, 숫자만들기, 연구소(백준), 디저트카페, 요리
 
 
 
-## BFS
-
-```python
- 다차원 배열을 탐색할때 백트래킹을 이용한 완전탐색 구현 이외에는 무조건 BFS를 사용한다. 그 이유는 BFS는 모든지점 방문과 각 방문지점까지의 거리를 한번에 계산할 수 있지만 DFS는 모든지점을 방문하는 것 이외에는 할 수 없기 때문이다. 
-    
-ex: 아기상어(백준), 연구소(백준), 탈주범 검거 등 
-```
-
-
-
-## 이차원 dir 구현
-
-```python
- 기본적으로 상하좌우를 dx,dy를 이용하여 많이 구현하고는 한다. 그런데 몇몇 문제에서는 주어지는 조건에 따라 갈 수 있는 방향이 달라지는 경우가 있다. 이때 이차원 dy,dx를 통하여 다음과 같이 구현해 볼 수 있다.
-
-백준의 파이프 문제를 예를 들면 다음과 같다. 
-각 조건에 맞는 방향을 2차원 dy,dx 로 구현한다.
-dy = [[0,1],[1,1],[0,1,1]]
-dx = [[1,1],[0,1],[1,0,1]]
-
-각 인덱스마다 갈 수 있는 방향의 갯수가 다르기 때문에 이것을 조절하기 위한 1차원 배열을 만들어준다.
-nowdir = [2,2,3]
-
-이렇게 갈 수 있는 방향이 특정되면 다음과 같이 현재의 방향(d)에 따라 다음 갈 방향이 어디인지 탐색할 수 있다.
-for nd in range(nowdir[d]):
-	ny = y+dy[d][nd]
-	nx = x+dx[d][nd]
-    BTK(ny,nx,nd)
-    
-ex: 감시(백준), 탈주범 검거, 파이프 등 
-
-```
-
-
-
-## 우선순위 구현
-
-```tex
-파이썬의 sorting 함수는 일반적으로 nlogn의 시간복잡도를 가진다. 하지만 배열의 크기가 작다면 위의 시간복잡도는 의미가 없어지기 때문에 key값을 이용한 sorting으로 매우 편하게 원하는 순서대로 배열을 정렬할 수 있다. 또한 복잡한 완전탐색에서 우선순위 queue를 임시로 구현하여 다음 탐색지점이나 다음 행동순서를 정한다면 문제의 깔끔한 풀이가 떠오르지 않을 때에도 답을 구현하는 데에는 성공할 수 있기 때문에 매우 유용한 테크닉이다. 
-
-ex: 줄기세포, 차량정비소, 아기상어 등
-```
-
-
-
-## 2차원 배열의 업데이트
-
-```
- 벽돌을 부숴서 새롭게 배열을 정렬하거나, 삼성의 활주로 문제처럼 한 배열을 탐색해서 활주로를 건설할 수 있는지 판단할 때에 일반적인 생각으로 바로 접근하게 되면 매우 비효율적인 시간복잡도를 구현하는 경우가 있다. 
- 이때 cnt 개념을 이용 하여 cnt 배열을 만들어주고 cnt를 한번 읽어오는 것을 구현하는 것은 (시간복잡도 O(n)) 이기 때문에 이를 이용한다면 조금 더 빠르고 편하게 원하는 바를 실행할 수 있다.
- 
- ex: 벽돌깨기, 블록사목(3월 sw A모의 문제) , 활주로
-```
-
-
-
-## 시뮬레이션
+# 시뮬레이션
 
  ```
 간단한 시뮬레이션은 상관없지만 좌표값에 2개 이상의 정보가 담기는 경우, 부딪치고 소멸하고 합쳐지는 등의 시뮬레이션이 필요할 시에는 클래스를 사용하는 것이 좋다. 파이썬은 리스트에 클래스 인스턴트를 담을 수 있고, 그것을 이용하여 어떤 조건이 만족되었을 시에 각 인스턴트 내부의 정보를 업데이트 하는 것이 실제 시뮬레이션을 하는데 있어 매우 유리하기 때문이다.
  ```
-
-
-
-## 2차원 배열에서 거리에 따라 할 수 있는 행동이 정해질 때
-
-```
- 2차원적인 어떤 조건을 주고 거리에 따라 취할수 있는 행동이 달라지는 경우가 있다. 처음에는 보통 2차원 배열 자체를 전체 탐색하며 원하는 조건을 구현해 주려고 하는데, 이 경우에는 한번 구현에 이차원 배열을 한번 탐색하게 되어 매우 비효율적인 경우가 발생할 수 있다. 가끔 생기는 이러한 문제는 좌표를 저장하는 배열을 만들고 좌표값을 업데이트 하거나 좌표값과 다른 필요한 정보를 가지는 클래스를 구현하여, 좌표의 계산값으로 상태변화를 처리함으로 빠른 시간내에 해결할 수 있다. 
-```
 
 
 

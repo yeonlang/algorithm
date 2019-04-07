@@ -7,9 +7,8 @@ def permu1(c):
     for i in range(N):
         if not visited[i]:
             visited[i] = 1
-            result.append(data[i])
+            result[c] = i
             permu1(c+1)
-            result.pop()
             visited[i]=0
 
 # 중복 순열
@@ -19,9 +18,8 @@ def permu2(c):
         return
 
     for i in range(N):
-        result.append(data[i])
+        result[c] = i
         permu2(c+1)
-        result.pop()
 
 # 조합
 def combi1(c,idx):
@@ -30,9 +28,8 @@ def combi1(c,idx):
         return
 
     for i in range(idx,N):
-        result.append(data[i])
+        result[c] = i
         combi1(c+1,i+1)
-        result.pop()
 
 # 중복 조합
 def combi2(c,idx):
@@ -41,16 +38,27 @@ def combi2(c,idx):
         return
 
     for i in range(idx,N):
-        result.append(data[i])
+        result[c] = i
         combi2(c+1,i)
-        result.pop()
+
+# 부분집합
+def subset(c,idx):
+    print(result[:c])
+
+    if c==K:
+        return
+
+    for i in range(idx,K):
+        result[c] = i
+        subset(c+1,i+1)
 
 N = 5
 K = 3
 data = [1,2,3,4,5]
 visited = [0]*N
-result = []
-combi1(0,0)
+result = [0,0,0]
+# combi1(0,0)
 # combi2(0,0)
 # permu1(0)
 # permu2(0)
+# subset(0,0)
