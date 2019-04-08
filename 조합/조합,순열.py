@@ -57,7 +57,7 @@ K = 3
 data = [1,2,3,4,5]
 visited = [0]*N
 result = [0,0,0]
-# combi1(0,0)
+combi1(0,0)
 # combi2(0,0)
 # permu1(0)
 # permu2(0)
