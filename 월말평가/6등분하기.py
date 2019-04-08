@@ -1,3 +1,5 @@
+
+
 def select(choice,idx,visited,number):
     global myMax
     if choice == 3:
