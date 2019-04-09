@@ -1,5 +1,5 @@
 import sys
-sys.stdin = open("홈방범서비스.txt","r")
+sys.stdin = open("홈방범서비스.txt.txt","r")
 
 from collections import deque
 

@@ -2,9 +2,9 @@ import sys
 sys.stdin = open("사다리타기.txt")
 
 def search(start_y,start_x):
-    stack = [(start_y,start_x,start_y,start_x)]
-    while stack:
-        y,x,ry,rx = stack.pop()
+    ry,rx = -1,-1
+    y,x = start_y,start_x
+    while True:
         if y == ln-1:
             if x == start_x:
                 return True
@@ -14,7 +14,8 @@ def search(start_y,start_x):
             ny = y+dy[i]
             nx = x+dx[i]
             if 0<=ny<ln and 0<=nx<lm and data[ny][nx] and not (ny == ry and nx == rx):
-                stack.append((ny,nx,y,x))
+                ry,rx = y,x
+                y,x = ny,nx
                 break
 
 def ispass(y,x):
