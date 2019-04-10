@@ -11,7 +11,7 @@ def sol():
     global result,K
 
     time = 0
-    while time != M:
+    while time < M:
         judge = {}
         for i in range(K):
             if mito[i]:
