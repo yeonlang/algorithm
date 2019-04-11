@@ -51,10 +51,9 @@ def sol():
                     d=back(d)
                     mito[u] = (y,x,num,d)
         v=0
-        while v != len(mito):
+        while v < len(mito):
             if not mito[v]:
                 del mito[v]
-                v=0
                 continue
             v+=1
         K=len(mito)

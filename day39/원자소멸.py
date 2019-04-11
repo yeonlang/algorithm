@@ -22,7 +22,6 @@ for tc in range(int(input())):
     N = (maxy-miny)*2
     M = (maxx-minx)*2
 
-
     for i in range(K):
         data[i][0]-=minx
         data[i][0] *= 2
