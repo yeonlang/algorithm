@@ -13,7 +13,6 @@ def fall(y,x):
 dy = [-1,-1,-1, 0, 1, 1, 1, 0]
 dx = [-1, 0, 1, 1, 1, 0, -1,-1]
 N,M,K = map(int,input().split())
-
 dic = dict()
 for y in range(N):
     for x in range(N):
