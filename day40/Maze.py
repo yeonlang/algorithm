@@ -3,10 +3,14 @@ sys.stdin = open("Maze.txt")
 
 from collections import deque
 def ispass(z,y,x): return True if 0<=z<5 and 0<=y<5 and 0<=x<5 else False
+def clear():
+    for x in range(5):
+        for y in range(5):
+            for z in range(5):
+                visited[z][y][x] = 0
+
 def BFS(data):
     global myMin
-    if not data[0][0][0]: return
-    visited = [[[0]*5 for _ in range(5)] for _ in range(5)]
     que = deque([(0,0,0)])
     visited[0][0][0] = 1
     while que:
@@ -14,6 +18,7 @@ def BFS(data):
         if z == 4 and y == 4 and x == 4:
             if visited[4][4][4]-1 < myMin or myMin == -1:
                 myMin = visited[4][4][4]-1
+                clear()
             return
         for i in range(6):
             nz = z+dz[i]
@@ -22,15 +27,17 @@ def BFS(data):
             if ispass(nz,ny,nx) and not visited[nz][ny][nx] and data[nz][ny][nx]:
                 visited[nz][ny][nx] = visited[z][y][x]+1
                 que.append((nz,ny,nx))
+    clear()
 
 # 돌린 판을 고르는 중복순열
 def DFS(c,tpdata):
     if c == 5:
         BFS(tpdata)
         return
-
     for i in range(4):
         tpdata[c] = data[result[c]][i]
+        if not tpdata[0][0][0] or (c==4 and not tpdata[4][4][4]):
+            continue
         DFS(c+1,tpdata)
 
 # 판을 쌓는 순열
@@ -40,11 +47,11 @@ def permu1(c):
         return
 
     for i in range(5):
-        if not visited[i]:
+        if not used[i]:
             result[c] = i
-            visited[i] = 1
+            used[i] = 1
             permu1(c+1)
-            visited[i] = 0
+            used[i] = 0
 
 def turn(data):
     copy = [[0]*5 for _ in range(5)]
@@ -53,6 +60,7 @@ def turn(data):
             copy[y][x] = data[4-x][y]
     return copy
 
+visited = [[[0]*5 for _ in range(5)] for _ in range(5)]
 dz = [1,-1,0,0,0,0]
 dy = [0,0,0,1,0,-1]
 dx = [0,0,1,0,-1,0]
@@ -72,7 +80,7 @@ for t in data1,data2,data3,data4,data5:
     data.append(temp)
 
 myMin = -1
-visited = [0]*5
+used = [0]*5
 result = [0]*5
 permu1(0)
 print(myMin)
