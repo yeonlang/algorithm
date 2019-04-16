@@ -26,6 +26,7 @@ for tc in range(int(input())):
     for _ in range(K):
         y, x, num, d = map(int,input().split())
         data.append(Cell(y,x,num,d-1))
+
     t = 0
     while t != time:
         visited = dict()
@@ -46,7 +47,6 @@ for tc in range(int(input())):
                 continue
             visited[(cell.y,cell.x)] = cell
             i+=1
-
         for cell in visited.values():
             cell.maxnum = cell.num
         t+=1

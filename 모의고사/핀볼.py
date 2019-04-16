@@ -38,7 +38,6 @@ def solution(start,d):
     while True:
         nx = x+dx[d]
         ny = y+dy[d]
-
         # 다음 지점이 벽일때
         if nx < 0 or nx >= n or ny < 0 or ny >= n:
             if d == 0:
@@ -81,6 +80,7 @@ dy=[-1,1,0,0]
 for tc in range(int(input())):
     n = int(input())
     data = [ [0]*n for _ in range(n)]
+    dp = [[[0]*4 for _2 in range(n+1)] for _3 in range(n+1)]
     wormhole = {}
     tempdic = {}
     result = 0
