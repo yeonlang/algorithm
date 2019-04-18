@@ -49,7 +49,7 @@ def subset(c,idx):
         return
 
     for i in range(idx,K):
-        result[c] = i
+        result[c] = i+1
         subset(c+1,i+1)
 
 N = 5
@@ -57,8 +57,8 @@ K = 3
 data = [1,2,3,4,5]
 visited = [0]*N
 result = [0,0,0]
-combi1(0,0)
+# combi1(0,0)
 # combi2(0,0)
 # permu1(0)
 # permu2(0)
-# subset(0,0)
+subset(0,0)
