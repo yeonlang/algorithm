@@ -1,18 +1,17 @@
+def find_message(text):
+    ans = ''
+    for s in text:
+        if s.isupper():
+            ans+=s
+    return ans
 
-# 부분집합
-def subset(c,idx):
-    print(choice)
-    print(s-choice)
 
-    if c==N:
-        return
+if __name__ == '__main__':
+    print('Example:')
+    print(find_message("How are you? Eh, ok. Low or Lower? Ohhh."))
 
-    for i in range(idx,N):
-        choice.add(i)
-        subset(c+1,i+1)
-        choice.remove(i)
-
-N = 5
-s = set([0,1,2,3,4])
-choice = set()
-subset(0,0)
+    # These "asserts" using only for self-checking and not necessary for auto-testing
+    assert find_message("How are you? Eh, ok. Low or Lower? Ohhh.") == "HELLO","hello"
+    assert find_message("hello world!") == "","Nothing"
+    assert find_message("HELLO WORLD!!!") == "HELLOWORLD","Capitals"
+    print("Coding complete? Click 'Check' to review your tests and earn cool rewards!")
